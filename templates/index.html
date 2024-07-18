@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Predict Laptop Price</title>
+    <!-- Font Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Rubik", sans-serif;
+        }
+        #header .a {
+            font-weight: 600;
+            color: white;
+        }
+        #header .a:hover {
+            font-weight: 600;
+            color: #0079C5;
+        }
+        #header .navbar {
+            background-color: #583270;
+        }
+        .container-fluid {
+            padding: 15px;
+        }
+        #home {
+            padding: 40px;
+            text-align: center;
+        }
+        #home .content {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Changed to align items to top */
+            gap: 30px;
+            margin-top: 45px; /* Added margin-top for spacing from title */
+            margin-left: 50px;
+        }
+        #home .judul, #home .gambar {
+            flex: 1;
+        }
+        #home img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .text {
+            width: 100%;
+            max-width: 700px; /* Increased max-width for the form */
+            margin: 0 auto;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            margin-left: 5px;
+            min-width: 180px; /* Lebar minimum label agar tetap konsisten */
+        }
+        input[type="text"], input[type="number"], select, button {
+            width: calc(100% - 120px); /* Calculate width for input */
+            margin-left: 10px; /* Adjusted margin */
+            padding: 10px; /* Increased padding */
+            font-size: 14px;
+            border: 2px solid #ddd; /* Changed border color to light grey */
+            border-radius: 5px;
+            box-shadow: none; /* Removed box shadow */
+        }
+        input[type=radio] {
+          margin-left: 20px; /* Menggeser ke kiri sejauh yang Anda butuhkan */
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            width: 566px; /* Fixed width */
+            height: 46px; /* Fixed height */
+            margin-bottom: 3px; /* Adjusted bottom margin */
+            margin-left: 10px;
+        }
+        .form-group select {
+            width: calc(100% - 120px); /* Calculate width for select */
+            margin-left: 10px; /* Adjusted margin */
+            padding: 10px; /* Increased padding */
+            font-size: 14px;
+            border: 2px solid #ddd; /* Changed border color to light grey */
+            border-radius: 5px;
+            box-shadow: none; /* Removed box shadow */
+        }
+        button {
+            display: block;
+            width: 566px; /* Fixed width */
+            height: 46px; /* Fixed height */
+            margin-top: 20px; /* Increased top margin */
+            margin-right: 100px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px; /* Increased padding */
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        footer {
+            color: #f9f9f9;
+            background-color: #583270;
+            padding: 15px;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body> 
+    <header id="header">
+        <nav class="navbar navbar-expand-lg fixed-top shadow-md px-5">
+            <div class="container-fluid">
+                <div>
+                    <a href="#" class="navbar-brand"><img width="145" src="{{ url_for('static', filename='images/logo.png') }}" alt="logo predict"></a>
+                </div>
+            </div>
+        </nav> 
+    </header>
+    <section id="home">
+        <h1>PREDICT LAPTOP PRICE</h1>
+        <div class="content">
+            <div class="gambar">
+                <img src="{{ url_for('static', filename='images/19199134.jpg') }}" alt="Laptop Image">
+            </div>
+            <div class="judul">
+                <form action="/predict" method="post" id="predictForm" class="text">
+                    <div class="form-group">
+                        <label for="Processor">Processor:</label>
+                        <input type="text" id="Processor" name="Processor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Operating_System">Operating System:</label>
+                        <input type="text" id="Operating_System" name="Operating_System" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="Touch_Screen">Touch Screen:</label>
+                        <input type="radio" id="Touch_Screen_1" name="Touch_Screen" value="1" required>
+                        <label for="Touch_Screen_1">Yes</label>
+                        <input type="radio" id="Touch_Screen_0" name="Touch_Screen" value="0">
+                        <label for="Touch_Screen_0">No</label>
+                    </div>                  
+                    <div class="form-group">
+                        <label for="Storage">Storage (GB):</label>
+                        <input type="number" id="Storage" name="Storage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="RAM">RAM:</label>
+                        <select id="RAM" name="RAM" required>
+                            <option selected disabled>Select RAM Capacity</option>
+                            <option value="4">4 GB</option>
+                            <option value="8">8 GB</option>
+                            <option value="16">16 GB</option>
+                            <option value="32">32 GB</option>
+                            <option value="64">64 GB</option>
+                        </select>
+                    </div>                 
+                    <div class="form-group">
+                        <label for="Screen_Size">Screen Size:</label>
+                        <input type="number" id="Screen_Size" name="Screen_Size" min="7" max="21" step="1" required>
+                    </div>
+                    <button type="submit">Predict Price</button>
+                </form>
+            </div>
+        </div>
+        {% if prediction_text %}
+        <div class="result">
+            <h3>Result:</h3>
+            <p>{{ prediction_text|safe }}</p>
+        </div>
+        {% endif %}
+    </section>
+    <footer>
+        <p>Created by Kelompok 3 Data Mining F6A6 - &copy; 2024</p>
+    </footer>
+</body>
+</html>
